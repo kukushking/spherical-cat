@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>You Can't Comb the Hair on a Spherical Cat</title>
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      overflow: hidden;
+      background: #0f0c29;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      color: #e0e0e0;
+    }
+    canvas { display: block; }
+
+    .panel {
+      pointer-events: auto;
+      background: rgba(15, 12, 41, 0.8);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 14px 20px;
+    }
+
+    #header {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      max-width: 560px;
+      pointer-events: none;
+      z-index: 10;
+    }
+    #header h1 {
+      font-size: 1.5em;
+      font-weight: 700;
+      margin-bottom: 8px;
+      background: linear-gradient(135deg, #ff8c42, #ff4466);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    #header .subtitle {
+      font-size: 0.78em;
+      opacity: 0.6;
+      line-height: 1.5;
+    }
+    #header .subtitle strong {
+      -webkit-text-fill-color: #ccc;
+      opacity: 1;
+    }
+
+    #info {
+      position: fixed;
+      bottom: 72px;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      max-width: 520px;
+      pointer-events: none;
+      z-index: 10;
+    }
+    #field-desc {
+      font-size: 0.82em;
+      opacity: 0.65;
+      line-height: 1.5;
+    }
+
+    #legend {
+      position: fixed;
+      bottom: 72px;
+      right: 20px;
+      font-size: 0.75em;
+      opacity: 0.5;
+      pointer-events: none;
+      z-index: 10;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    #controls {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+      z-index: 10;
+    }
+    .field-btn {
+      pointer-events: auto;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #ccc;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.82em;
+      font-family: inherit;
+      transition: all 0.2s ease;
+    }
+    .field-btn:hover {
+      background: rgba(255, 255, 255, 0.14);
+      color: #fff;
+    }
+    .field-btn.active {
+      background: rgba(255, 140, 66, 0.25);
+      border-color: rgba(255, 140, 66, 0.5);
+      color: #ff8c42;
+    }
+
+    @media (max-width: 600px) {
+      #header { max-width: 92vw; }
+      #header h1 { font-size: 1.15em; }
+      #header .subtitle { font-size: 0.7em; }
+      .field-btn { padding: 6px 10px; font-size: 0.72em; }
+      #info { max-width: 90vw; bottom: 64px; }
+      #controls { bottom: 14px; }
+      #legend { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas"></canvas>
+
+  <div id="header" class="panel">
+    <h1>You Can't Comb the Hair on a Spherical Cat</h1>
+    <p class="subtitle">The <strong>Hairy Ball Theorem</strong> states that any continuous tangent vector field on a sphere must have at least one point where the vector is zero. In other words, if a sphere is covered in hair, you can never comb it all flat without creating at least one cowlick or bald spot. Try the different fields below to see why!</p>
+  </div>
+
+  <div id="info">
+    <p id="field-desc"></p>
+  </div>
+
+  <div id="legend">
+    <div class="legend-item">
+      <div class="legend-dot" style="background: #ff8c42;"></div>
+      <span>Hair (tangent vectors)</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-dot" style="background: #ff1744;"></div>
+      <span>Singularity (unavoidable zero)</span>
+    </div>
+  </div>
+
+  <div id="controls"></div>
+
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>
